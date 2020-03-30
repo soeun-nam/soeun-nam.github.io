@@ -3,9 +3,9 @@
 # Site wide configuration
 ####################################
 #
-title: Leonids
+title: Thdms DBA
 email:
-description: A simple and awesome blog theme powered by jekyll.
+description: Operate and manage database system
 url: # the base hostname & protocol for your site
 keywords: ["blog", "jekyll"]
 
@@ -30,14 +30,14 @@ kramdown:
 #
 ###################################
 # Site Owner configuration
-####################################
+#################################### 
 #
 owner:
-  name: Leonids
+  name: Thdms DBA
   avatar: leonids-logo.png
-  job: "A jekyll theme"
-  bio: "A simple and awesome blog theme powered by jekyll."
-  email:
+  job: "DataBase Administrator"
+  bio: "Operate and manage database system"
+  email: nso103@naver.com
   disqus-shortname:
   twitter: #username
   facebook: #username
