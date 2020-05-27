@@ -1,6 +1,6 @@
 ---
 layout: post
-title: ORACLE SERVER STRUCTURE
+title: ORACLE ADMIN 01
 excerpt: "There are three major structures in Oracle Database server architecture: memory structures, process structures, and storage structures."
 categories: [ORACLE ADMINISTRATION]
 comments: true
@@ -8,23 +8,19 @@ comments: true
 
 ### Explanation
 
-> ORACLE 11GWS1 
+> ORACLE 11GWS1 오라클 인스턴스 정보와 디비 정보, 서버 기동 확인 해보기, install하기
 
-오라클 인스턴스 정보와 디비 정보, 서버 기동 확인 해보기, install하기
-
-### Information confirmation
-
-** Instance information
+### Instance information
 echo $ORACLE_SID
 select * from v$sga;
 select * from v$sgastat;      -- detail info
 select spid, pname from v$process;  -- BG process, server process
 select * from v$instance;  
 
-** Server maneuver 
+### Server maneuver 
 ps  -ef |  grep orcl
 
-** DB information
+### DB information
 show parameter db_name
 show parameter control_files
 select * from v$controlfile;
