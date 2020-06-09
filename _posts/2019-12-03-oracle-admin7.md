@@ -8,33 +8,33 @@ comments: true
 
 ### shared pool
 
-> shared pool이란? 
- 오라클 SGA를 구성하는 가장 기본적인 구성 요소에 해당
+> shared pool이란?<br>
+오라클 SGA를 구성하는 가장 기본적인 구성 요소에 해당
  
-> shared pool의 용도란?
+> shared pool의 용도란?<br>
  sql문 실행할때 parse단계에서 shared pool에 저장된 내용을 확인하고 soft parse할건지 hard parse할건지 결정
  동일한 sql문을 실행할때 shared pool에 저장된 내용을 확인후 parse단계를 건너뛰는 soft parse를 함
 
-> shared pool에 저장되는 정보?
+> shared pool에 저장되는 정보?<br>
  shared pool속 라이브러리 캐시에 sql문,실행계획,p-code가 저장됨
  LC : SQL문, 실행계획, p-code
  DC : data dictionary 내용을 저장
  
 ### database buffer cache
 
-> database buffer cache이란?
+> database buffer cache이란?<br>
  Datafile 들로부터 읽은 Data Block의 복사본을 담고 있는 SGA의 한 부분
 
-> database buffer cache의 용도는?
+> database buffer cache의 용도는?<br>
  sql문 처리단계에서 Execute단계를 수행할때 데이터버퍼캐시에 저장된 내용을 조회하여 조회가 가능하면 logical read, 데이터 버퍼캐시에 저장된 내용중에 일치하는것이 없어서 디스크에서 데이터버퍼캐시로 해당 데이터를 받아오는 것이 physical read.
  DB작업의 효율적인 작업을 위해 디스크의 데이터를 데이터버퍼캐시에 복사하여 저장해두는 곳
 
 ### parameter, parameter file 
 
-> 파라미터 파일이 있는 경로
+> 파라미터 파일이 있는 경로<br>
  $ORACLE_HOME/dbs
  
-> 파라미터 파일의 종류
+> 파라미터 파일의 종류<br>
  서버 파라미터 파일 (spfile, spfile<SID>.ora) : spfile, binary parameter file
  텍스트 초기화 파라미터 파일 (init<SID>.ora) : init 파일, pfile, text parameter file
  
@@ -44,6 +44,7 @@ comments: true
 
 ## Code Snippets
 {% highlight css %}
+
 --파라미터 정보확인
 SQL> select count(*) from v$parameter;
 
@@ -131,9 +132,7 @@ SQL> ! cat $ORACLE_HOME/dbs/spfileorcl.ora
 ...
 SQL> ALTER SYSTEM SET db_recovery_file_dest_size = 3G ;
 
-System altered.
-
--- spfile로 startup 시행했으므로 scope 옵션 생략시 scope=both가 적용되어 시스템과 spfile의 내용이 변경됨
+System altered.  -- spfile로 startup 시행했으므로 scope 옵션 생략시 scope=both가 적용되어 시스템과 spfile의 내용이 변경됨
    
 SQL> ! cat $ORACLE_HOME/dbs/initorcl.ora
 ...
@@ -145,8 +144,8 @@ SQL> ! cat $ORACLE_HOME/dbs/spfileorcl.ora
 *.db_recovery_file_dest_size=3221225472
 *.db_recovery_file_dest='+FRA'
 ...
--- Parameter 확인
-SQL> show parameter recovery
+
+SQL> show parameter recovery   -- Parameter 확인
 
 NAME                                 TYPE        VALUE
 ------------------------------------ ----------- ------------------------------
@@ -157,7 +156,8 @@ recovery_parallelism                 integer     0
 {% endhighlight %}
 
 {% highlight css %}
---SESSION 레벨로 파라메터 변경시 
+
+-- session레벨로 파라메터 변경시 
 
 SQL>alter syetem set sql_trace=true;
 
@@ -192,8 +192,7 @@ statistics_level TYPICAL
 SQL> ALTER SESSION SET large_pool_size = 20M ;
 
 ERROR at line 1:
-ORA-02096: specified initialization parameter is not modifiable with this option
--- SESSION 레벨의 변경이 안됨
+ORA-02096: specified initialization parameter is not modifiable with this option -- session레벨의 변경이 안됨
 
 SQL> ALTER SYSTEM SET large_pool_size = 20M ;
 

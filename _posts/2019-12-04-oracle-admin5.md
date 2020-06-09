@@ -238,6 +238,8 @@ READ WRITE
 {% endhighlight %}
 
 {% highlight css %}
+
+--제한모드로 db시작하기
 SQL> select * from session_privs 
      where privilege = 'RESTRICTED SESSION';
 
