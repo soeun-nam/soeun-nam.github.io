@@ -7,34 +7,33 @@ comments: true
 ---
 
 ### shared pool
-
-> shared pool이란?<br>
+> shared pool이란?    
 오라클 SGA를 구성하는 가장 기본적인 구성 요소에 해당
  
-> shared pool의 용도란?<br>
+> shared pool의 용도란?    
  sql문 실행할때 parse단계에서 shared pool에 저장된 내용을 확인하고 soft parse할건지 hard parse할건지 결정
  동일한 sql문을 실행할때 shared pool에 저장된 내용을 확인후 parse단계를 건너뛰는 soft parse를 함
 
-> shared pool에 저장되는 정보?<br>
+> shared pool에 저장되는 정보?      
  shared pool속 라이브러리 캐시에 sql문,실행계획,p-code가 저장됨
  LC : SQL문, 실행계획, p-code
  DC : data dictionary 내용을 저장
  
 ### database buffer cache
 
-> database buffer cache이란?<br>
+> database buffer cache이란?        
  Datafile 들로부터 읽은 Data Block의 복사본을 담고 있는 SGA의 한 부분
 
-> database buffer cache의 용도는?<br>
+> database buffer cache의 용도는?        
  sql문 처리단계에서 Execute단계를 수행할때 데이터버퍼캐시에 저장된 내용을 조회하여 조회가 가능하면 logical read, 데이터 버퍼캐시에 저장된 내용중에 일치하는것이 없어서 디스크에서 데이터버퍼캐시로 해당 데이터를 받아오는 것이 physical read.
  DB작업의 효율적인 작업을 위해 디스크의 데이터를 데이터버퍼캐시에 복사하여 저장해두는 곳
 
 ### parameter, parameter file 
 
-> 파라미터 파일이 있는 경로<br>
+> 파라미터 파일이 있는 경로    
  $ORACLE_HOME/dbs
  
-> 파라미터 파일의 종류<br>
+> 파라미터 파일의 종류    
  서버 파라미터 파일 (spfile, spfile<SID>.ora) : spfile, binary parameter file
  텍스트 초기화 파라미터 파일 (init<SID>.ora) : init 파일, pfile, text parameter file
  
