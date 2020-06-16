@@ -21,7 +21,7 @@ comments: true
 
 ## 논리적 및 물리적 데이터베이스 구조
 
-![DATAST](./C:\image/DATAST.jpg){: width="100" height="100"}
+![DATAST](.C:\leonids-master\image\DATAST.jpg){: width="100" height="100"}
 
 ** 논리적 구조 **
 
@@ -134,7 +134,7 @@ comments: true
  * logging : 저장된 segment에서의 모든 작업에 log를 기록(default)   
               nologging : 일부 명령에 대해서는 log를 기록 X       
                           장애시 복구할 수 없음    
-              CTAS(create table as select), Direct Load 의 경우 다시 데이터를 가져올수있으므로 꼭 리두를 기록할 필요x     
+              CTAS(create table as select), Direct Load 의 경우 다시 데이터를 가져올수있으므로 꼭 리두를 기록할 필요x    
 	          OLTP작업에 대해서는 리두를 기록해야함    
 
  * blocksize : standard block size (=db_block_size) 아닌 block size를 이용하여는 경우       

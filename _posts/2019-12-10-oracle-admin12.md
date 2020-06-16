@@ -21,25 +21,25 @@ comments: true
 
 ## 오라클 네트워크 구성  
 
-client         ----->    server    
-Oracle Net    <------   Oracle Net    
-tnsnames.ora            listener.ora    
-                        tnsnames.ora- 동적등록
+ * client         ----->    server    
+   Oracle Net    <------   Oracle Net    
+   tnsnames.ora            listener.ora    
+                           tnsnames.ora- 동적등록
 
-*CLIENT측과 SERVER측 양쪽에 각각 ORACLE NET이 존재함      
-*항상 LISTNER가 실행되어 있어야하며, SERVER측에 LISTENER를 띄울 수 있는 LISTENER.ORA가 CLIENT측에는 TNSNAMES.ORA가 존재해야함						
+ * CLIENT측과 SERVER측 양쪽에 각각 ORACLE NET이 존재함      
+ * 항상 LISTNER가 실행되어 있어야하며, SERVER측에 LISTENER를 띄울 수 있는 LISTENER.ORA가 CLIENT측에는 TNSNAMES.ORA가 존재해야함						
 
-sqlnet.ora  		   sqlnet.ora   
-user process -------> server process , PGA    
-                       connection    
-					   username/password - session    
+ * sqlnet.ora  		   sqlnet.ora   
+   user process -------> server process , PGA    
+                         connection    
+					     username/password - session    
 					   
-tns : Transparent Network Substrate    
-1) nw protocol    
-2) ip addr(hostname)    
-3) port : 1521  ( 1024- 65536)    
-4) SID or service_name    
-5,6) username / password    
+ * tns : Transparent Network Substrate    
+   1) nw protocol    
+   2) ip addr(hostname)    
+   3) port : 1521  ( 1024- 65536)    
+   4) SID or service_name    
+   5,6) username / password    
 
 {% highlight css %}
 SYS@orcl> show parameter db_name
