@@ -9,10 +9,14 @@ comments: true
 
 # TABLE A CONTENT
  
-> 오라클 네트워트 구성   
-> 리스너의 서비스 등록방법 : Dynamic, Static   
+> 오라클 네트워트 구성
+   
+> 리스너의 서비스 등록방법 : Dynamic, Static 
+  
 > 접속 방법 4가지     
+
 > Shared Server    
+
 > DB link 생성
 
 ## 오라클 네트워크 구성  
@@ -22,7 +26,7 @@ Oracle Net    <------   Oracle Net
 tnsnames.ora            listener.ora    
                         tnsnames.ora- 동적등록
 
-*CLIENT측과 SERVER측 양쪽에 각각 ORACLE NET이 존재함
+*CLIENT측과 SERVER측 양쪽에 각각 ORACLE NET이 존재함      
 *항상 LISTNER가 실행되어 있어야하며, SERVER측에 LISTENER를 띄울 수 있는 LISTENER.ORA가 CLIENT측에는 TNSNAMES.ORA가 존재해야함						
 
 sqlnet.ora  		   sqlnet.ora   
@@ -105,14 +109,14 @@ With the Partitioning, OLAP, Data Mining and Real Application Testing options
 
 ## 리스너의 서비스 등록 방법 : Dynamic/Static  Resistration   
 
-1.Dynamic registration     
+1. Dynamic registration     
  * lprotocol, hostname, port      
  * listener.ora 파일 안에 정보가 3가지만 있는 경우 -> db를 startup 할 때 pmon이 listener에게 service name등록    
  * pmon이 빨리 등록을 못한다면 alter system register;를 통해 수동 등록
  * db 서버측에 tnsnames.ora는 동적 등록을 위해 필요   
- * client측으 tnsnames.ora는 서버 연결을 위해 필요 
+ * client측의 tnsnames.ora는 서버 연결을 위해 필요 
  
-2.Static registration    
+2. Static registration    
  * protocol, hostname, port, SID   
  * listener.ora 파일 안에 정보가 4가지가 다 있는 경우    
  
@@ -183,26 +187,26 @@ LSNRCTL>
  
 ## SHARED SERVER 환경설정   
  
- *dispatcher 설정
+ * dispatcher 설정
    alter system set dispatchers=    
    "(protocol=tcp)(dispatchers=5)";    
    alter system set max_dispatchers=10;   
    
-  *shared server 설정    
+  * shared server 설정    
     alter system set shared_servers=3;   
 	alter system set max_shared_servers=10;   
 
- *tnsnames.ora    
+ * tnsnames.ora    
     orcl_d =.... (connect_data=(server=dedicated)...)   
 	orcl_s =  서버의 설정대로     
 	
- *listener에 dispatcher 가 등록된 것을 확인    
+ * listener에 dispatcher 가 등록된 것을 확인    
    lsnrctl service	- +ASM에서 조회해야됨    
    show parameter dispatche   
    show parameter shared_server    
    select * from v$dispatcher;    
 
- *TEST    
+ * TEST    
   session1) sqlplus scott/tiger@orcl_d    
   session2)sqlplus scott/tiger@orcl_s    
   DBA session ) select sid, username, server    
@@ -292,15 +296,15 @@ The command completed successfully
 
 ## DB LINK 생성   
 
- XE ---------------> orcl			--> XE는 윈도우환경 hr유저    
+ XE ---------------> orcl			--> XE는 윈도우환경 hr유저       
    hr                  scott.emp    
    create database link orcl_db    
    connect to  scott identified by tiger    
    using 'orcl';		--> orcl_db는 링크이름을 정해준것. 'orcl'은 윈도우에서 tnsnames파일에 있는 리눅스로 연결하는 tns alias를 입력
  
- *server에서 server로 연결하려면 DB링크가필요    
- *윈도우환경 client에서 리눅스의 DB서버로 접속하려면 tnsnames파일에 연결을 추가 하고 cmd에서 sqlplus hr/hr@orcl 입력해서 접속   
- *tnsnames경로(C:\oraclexe\app\oracle\product\11.2.0\server\network\ADMIN)   
+ * server에서 server로 연결하려면 DB링크가필요    
+ * 윈도우환경 client에서 리눅스의 DB서버로 접속하려면 tnsnames파일에 연결을 추가 하고 cmd에서 sqlplus hr/hr@orcl 입력해서 접속   
+ * tnsnames경로(C:\oraclexe\app\oracle\product\11.2.0\server\network\ADMIN)   
   ORCL =
    (DESCRIPTION =
     (ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.56.101)(PORT = 1521))

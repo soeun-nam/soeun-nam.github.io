@@ -11,13 +11,13 @@ comments: true
 
 > 데이터베이스에서 사용하는 모든 파일에 대해 자동저장공간 관리를 제공  
 
- *장점   
+ * 장점   
  1) 효율적인 디스크 자원의 관리     
  2) 자원의 물리적 장애에 대한 관리 향상     
  3) 디스크 I/O의 효율적인 분산     
  4) 효율적인 업무에 대한 집중 
 
- *DB instance와 ASM instance startup, shutdown 순서   
+ * DB instance와 ASM instance startup, shutdown 순서   
   startup - ASM인스턴스 먼저   
   shutdown - DB인스턴스 먼저   
   
@@ -115,7 +115,7 @@ ADR Home
 11 rows selected.
 {% endhighlight %}
 
-##Dynamic Performance View 종류 확인   
+## Dynamic Performance View 종류 확인   
 
 >오라클 인스턴스가 동작할때마다 자동 갱신되는 뷰들이며 오라클의 상태, 성능, 모니터링, 감사 등을 위한 뷰   
 
@@ -270,11 +270,11 @@ SYS@orcl> select dbid, name, open_mode, log_mode from v$database;  --데이터�
 
 ## ASM Fast Mirror Resync 확인    
  
- *11g에 도입 된 새로운 기능으로 ASM Fast Mirror Resync는 디스크의 일시적 장애를 재 동기화하는데 필요한 시간을 줄임    
- *일시적 장애 후 디스크가 OFFLINE 상태가 되면 ASM은 중단 중에 수정 된 범위를 추적    
- *일시적인 오류가 복구되면 ASM은 중단 중에 영향을 받은 ASM 디스크 범위만 빠르게 재 동기화함    
- *ASM 디스크 경로가 실패하면 해당 디스크 그룹에 대해 DISK_REPAIR_TIME 속성을 설정 한 경우 ASM디스크가 오프라인 상태가 되지만 삭제가 안됨         
- *이 속성의 설정은 복구를 완료한 후에도 재 동기화 할 수 있는 동안 ASM이 허용하는 디스크 중단 기간을 결정    
+ * 11g에 도입 된 새로운 기능으로 ASM Fast Mirror Resync는 디스크의 일시적 장애를 재 동기화하는데 필요한 시간을 줄임    
+ * 일시적 장애 후 디스크가 OFFLINE 상태가 되면 ASM은 중단 중에 수정 된 범위를 추적    
+ * 일시적인 오류가 복구되면 ASM은 중단 중에 영향을 받은 ASM 디스크 범위만 빠르게 재 동기화함    
+ * ASM 디스크 경로가 실패하면 해당 디스크 그룹에 대해 DISK_REPAIR_TIME 속성을 설정 한 경우 ASM디스크가 오프라인 상태가 되지만 삭제가 안됨         
+ * 이 속성의 설정은 복구를 완료한 후에도 재 동기화 할 수 있는 동안 ASM이 허용하는 디스크 중단 기간을 결정    
  
 {% highlight css %}
 
