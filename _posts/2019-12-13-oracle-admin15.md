@@ -21,7 +21,7 @@ comments: true
 
 ## 논리적 및 물리적 데이터베이스 구조
 
-![DATAST](.C:\leonids-master\image\DATAST.jpg){: width="100" height="100"}
+![DATAST](./leonids-master/image/DATAST.jpg){: width="100" height="100"}
 
 ** 논리적 구조 **
 
