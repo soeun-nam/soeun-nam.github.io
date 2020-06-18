@@ -693,8 +693,169 @@ User altered.
   PASSWORD_VERIFY_FUNCTION verify_function_11G;   
 
  - 사용자가 지정된 profile의 삭제시는 cascade 옵션을 사용 : 관련 사용자는 default profile로 재지정됨   
-   
+ 
+### user 관리 실습 복습하기  
 
+{% highlight css %}
+
+--8장 user 관리 실습 복습
+SYS@orcl> create role query_role;     --롤 생성
+Role created.
+
+SYS@orcl> grant select any table to query_role;       --롤에게 권한 부여
+Grant succeeded.
+
+SYS@orcl> create user james identified by oracle        --유저 생성
+		  default tablespace users 
+		  temporary tablespace temp  
+		  quota 1m on users;                    
+User created.
+
+SYS@orcl> grant create session to james;            --유저에게 세션 권한 부여
+Grant succeeded.
+
+SYS@orcl> select * from dba_users where username='JAMES';        --james유저가 가지고 있는 정보
+
+USERNAME                          USER_ID PASSWORD
+------------------------------ ---------- ------------------------------
+ACCOUNT_STATUS                   LOCK_DATE EXPIRY_DA
+-------------------------------- --------- ---------
+DEFAULT_TABLESPACE             TEMPORARY_TABLESPACE           CREATED
+------------------------------ ------------------------------ ---------
+PROFILE                        INITIAL_RSRC_CONSUMER_GROUP
+------------------------------ ------------------------------
+EXTERNAL_NAME
+--------------------------------------------------------------------------------
+PASSWORD E AUTHENTI
+-------- - --------
+JAMES                                 113
+OPEN                                       14-JUN-20
+USERS                          TEMP                           17-DEC-19
+DEFAULT                        DEFAULT_CONSUMER_GROUP
+
+10G 11G  N PASSWORD
+
+SYS@orcl> grant create session, query_role to james;  -- jame 유저에게 create session 권한, query_role를 부여
+Grant succeeded.
+
+SYS@orcl> conn james/oracle
+Connected.
+JAMES@orcl> select * from session_privs;   -- james가 가지고 있는 세션 정보 확인
+
+PRIVILEGE
+----------------------------------------
+CREATE SESSION
+SELECT ANY TABLE
+
+JAMES@orcl> select * from user_sys_privs;
+
+USERNAME                       PRIVILEGE                                ADM
+------------------------------ ---------------------------------------- ---
+JAMES                          CREATE SESSION                           NO
+
+JAMES@orcl> set lines 80
+JAMES@orcl> select * from user_role_privs;
+
+USERNAME                       GRANTED_ROLE                   ADM DEF OS_
+------------------------------ ------------------------------ --- --- ---
+JAMES                          QUERY_ROLE                     NO  YES NO
+
+JAMES@orcl> conn / as sysdba
+Connected.
+SYS@orcl> alter user james default role none;          --DEF YES에서 NO로 변경
+
+User altered.
+
+SYS@orcl> conn james/oracle
+Connected.
+JAMES@orcl> select * from user_role_privs;
+
+USERNAME                       GRANTED_ROLE                   ADM DEF OS_
+------------------------------ ------------------------------ --- --- ---     --DEF가 NO이면 평상시에 사용하지 못하게 설정함
+JAMES                          QUERY_ROLE                     NO  NO  NO
+
+JAMES@orcl> select * from dual;                    --dual은 검색이 되지만
+
+D
+-
+X
+
+JAMES@orcl> select * from scott.emp;               --scott는 검색이 안됨
+select * from scott.emp
+                    *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+JAMES@orcl> set role query_role;           --롤을 처음 로그인 할때만 활성화
+
+Role set.
+
+JAMES@orcl> select * from scott.emp;       --다시 검색해봤을때 활성화 시켰으니까 검색 됨
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800
+        20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300
+        30
+14 rows selected.
+
+JAMES@orcl> conn james/oracle               --다시 로그인
+Connected.
+JAMES@orcl> select * from scott.emp;          --다시 검색이 안됨
+select * from scott.emp
+                    *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+JAMES@orcl> desc dbms_session                 --alter session, set role 명령문 및 기타 세션 정보에 대한 정보 제공
+
+JAMES@orcl> exec dbms_session.set_role('QUERY_ROLE');   --set_role이라는 프로시저를 사용해서 롤 활성화
+
+PL/SQL procedure successfully completed.
+
+JAMES@orcl> select * from scott.emp;           --활성화 해서 검색 가능
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM
+---------- ---------- --------- ---------- --------- ---------- ----------
+    DEPTNO
+----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800
+        20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300
+        30
+14 rows selected.
+
+/*
+set role과 차이점
+set role은 ddl만 실행 가능하지만 dbms_session은 dml만 가능(create, alter등등 불가능)
+create ..
+begin
+set role query_role  -- 실행불가
+=>dbms_session을 이용해서 실행 할 수 있게 해주는 프로시저
+end;
+/
+*/
+--PL/SQL -> PROCEDURE, FUNCTION, PACKAGE, TRIGGER
+--TRIGGER: 특정 EVENT가 발생하면 자동으로 실행되는 프로그램
+
+--매일 오후 16시에 접속을 하면 james user가 받은 query_role 활성화 되도록 trigger를 생성하세요.
+CREATE OR REPLACE TRIGGER logon_trig
+AFTER LOGON ON SCHEMA.JAMES           --로그온 할때마다 자동 실행이 되도록 해주는 프로그램(EVENT: LOGON)
+BEGIN
+IF (TO_CHAR (SYSDATE, 'HH24MISS') BETWEEN '160000' AND '165959') --TIME(AFTER, BEFORE) 160000(4시),165959(5시 되기 전까지)
+     THEN   
+        DBMS_SESSION.SET_ROLE('query_role');
+     ELSE
+	DBMS_SESSION.SET_ROLE('NONE');
+     END IF;
+END;
+/
+{% endhighlight %}
 ## Buttons
 
 Make any link standout more when applying the `.btn` class.
