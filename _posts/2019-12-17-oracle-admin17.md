@@ -9,8 +9,7 @@ comments: true
 
 # ORACLE LOCK MECHANISM
   
-  - 여러 세션이 동시에 같은 데이터를 변경하지 못하도록
-  - 오라클은 가장 최소 레벨의 LOCK을 자동으로 사용   
+  **여러 세션이 동시에 같은 데이터를 변경하지 못하도록 함, 오라클은 가장 최소 레벨의 LOCK을 자동으로 사용**  
 
  * DML - ROW LEVEL LOCK MODE (TX) : X(Exclusive)  
  * DML - TABLE LEVEL LOCK MODE (TM)  
@@ -45,14 +44,14 @@ comments: true
     - $ORACLE_HOME/rdbms/admin/utllockt.sql   
 	
   * 해결  
-   - 해당 트랜잭션을 종료  
-   - 세션을 KILL - 진행중인 트랜잭션은 ROLLBACK됨  
+    - 해당 트랜잭션을 종료  
+    - 세션을 KILL - 진행중인 트랜잭션은 ROLLBACK됨  
   
   * DEAD LOCK   
-   - deadlock 은 서로가 서로를 기다리는 교착상태   
-   - ora-60 deadlock detected (alert_orcl.log)  
-   - 일단 모두 허용, dead lock ring 발견시 발생 명령을 rollback(먼저 lock건)    
-   - deadlock 이 발생하지 않도록 하려면 일괄 작업(batch) 을 수행할 때 작업하는 행을 같은 순서로 처리   
+    - deadlock 은 서로가 서로를 기다리는 교착상태   
+    - ora-60 deadlock detected (alert_orcl.log)  
+    - 일단 모두 허용, dead lock ring 발견시 발생 명령을 rollback(먼저 lock건)    
+    - deadlock 이 발생하지 않도록 하려면 일괄 작업(batch) 을 수행할 때 작업하는 행을 같은 순서로 처리   
 
 {% highlight css %}
 
