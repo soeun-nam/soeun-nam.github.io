@@ -38,20 +38,20 @@ comments: true
 
   * 다른 세션에서 걸어놓은 LOCK 때문에 WAITING발생   
   * 발견  
-    - EM Performance Page의 blocking sessions    
-    - ADDM Report   
-    - v$session, v$lock   
-    - $ORACLE_HOME/rdbms/admin/utllockt.sql   
+    EM Performance Page의 blocking sessions    
+    ADDM Report   
+    v$session, v$lock   
+    $ORACLE_HOME/rdbms/admin/utllockt.sql   
 	
   * 해결  
-    - 해당 트랜잭션을 종료  
-    - 세션을 KILL - 진행중인 트랜잭션은 ROLLBACK됨  
+    해당 트랜잭션을 종료  
+    세션을 KILL - 진행중인 트랜잭션은 ROLLBACK됨  
   
   * DEAD LOCK   
-    - deadlock 은 서로가 서로를 기다리는 교착상태   
-    - ora-60 deadlock detected (alert_orcl.log)  
-    - 일단 모두 허용, dead lock ring 발견시 발생 명령을 rollback(먼저 lock건)    
-    - deadlock 이 발생하지 않도록 하려면 일괄 작업(batch) 을 수행할 때 작업하는 행을 같은 순서로 처리   
+    deadlock 은 서로가 서로를 기다리는 교착상태   
+    ora-60 deadlock detected (alert_orcl.log)  
+    일단 모두 허용, dead lock ring 발견시 발생 명령을 rollback(먼저 lock건)    
+    deadlock 이 발생하지 않도록 하려면 일괄 작업(batch) 을 수행할 때 작업하는 행을 같은 순서로 처리   
 
 {% highlight css %}
 
